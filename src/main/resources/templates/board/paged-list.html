@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> 게시판 목록  </title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        .pagination {
+            margin-top: 20px;
+        }
+        .pagination a {
+            margin: 0 5px;
+            text-decoration: none;
+            color: #007bff;
+        }
+        .pagination a.active {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<h1>게시판 목록</h1>
+
+<table>
+    <thead>
+    <tr>
+        <th>#</th>
+        <th>Title</th>
+        <th>Content</th>
+        <th>Writer</th>
+        <th>RegDate</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="board : ${boards}">
+        <td th:text="${board.bno}"></td>
+        <td th:text="${board.title}"></td>
+        <td th:text="${board.content}"></td>
+        <td th:text="${board.writer}"></td>
+        <td th:text="${board.regdate}"></td>
+    </tr>
+    </tbody>
+</table>
+
+<!-- Pagination -->
+<div class="pagination">
+    <a th:href="@{/board/list/page(page=${currentPage - 1}, size=${pageSize})}"
+       th:if="${currentPage > 1}">&laquo; Previous</a>
+
+    <span th:each="i : ${#numbers.sequence(1, totalPages)}">
+            <a th:href="@{/board/list/page(page=${i}, size=${pageSize})}"
+               th:classappend="${i == currentPage} ? 'active'">
+                <span th:text="${i}"></span>
+            </a>
+        </span>
+
+    <a th:href="@{/board/list/page(page=${currentPage + 1}, size=${pageSize})}"
+       th:if="${currentPage < totalPages}">Next &raquo;</a>
+</div>
+</body>
+</html>

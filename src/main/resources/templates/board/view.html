@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>게시글 상세보기</title>
+</head>
+<body>
+<h1>게시글 상세보기</h1>
+<div>
+    <p><strong>제목:</strong> <span th:text="${board.title}"></span></p>
+    <p><strong>작성자:</strong> <span th:text="${board.writer}"></span></p>
+    <p><strong>작성일:</strong> <span th:text="${board.regdate}"></span></p>
+    <p><strong>수정일:</strong> <span th:text="${board.updatedate} != null ? ${board.updatedate} : '수정되지 않음'"></span></p>
+    <p><strong>내용:</strong></p>
+    <p th:text="${board.content}"></p>
+</div>
+<a href="/board/aboard">목록으로</a> <a href="/board/modify" th:href="@{'/board/modify/' + ${board.bno}}">수정하기</a>
+<form th:action="@{'/board/delete/' + ${board.bno}}" method="post">
+    <button type="submit">삭제</button>
+</form>
+</body>
+</html>

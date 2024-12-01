@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Board List</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>Board List</h1>
+    <div id="board-list"></div>
+    <button id="prev-page">Previous</button>
+    <span id="current-page">1</span>
+    <button id="next-page">Next</button>
+
+    <script>
+        let currentPage = 1;
+        const pageSize = 10;
+
+        function fetchBoardList(page) {
+            $.ajax({
+                url: `/boards/list/jsom`,
+                method: "GET",
+                data: { page: page, size: pageSize },
+                success: function (response) {
+                    renderBoardList(response.content); // Page<Board>의 content 가져오기
+                    $("#current-page").text(page); // 현재 페이지 표시
+                },
+                error: function () {
+                    alert("Error fetching board list!");
+                }
+            });
+        }
+
+        function renderBoardList(boards) {
+            const boardList = $("#board-list");
+            boardList.empty(); // 기존 내용을 초기화
+            boards.forEach(board => {
+                boardList.append(`
+                    <div>
+                        <h2>${board.title}</h2>
+                        <p>${board.content}</p>
+                        <small>Writer: ${board.writer} | Date: ${board.regdate}</small>
+                        <hr>
+                    </div>
+                `);
+            });
+        }
+
+        // 초기 로드
+        fetchBoardList(currentPage);
+
+        // 페이지 버튼 이벤트
+        $("#prev-page").click(() => {
+            if (currentPage > 1) {
+                currentPage--;
+                fetchBoardList(currentPage);
+            }
+        });
+
+        $("#next-page").click(() => {
+            currentPage++;
+            fetchBoardList(currentPage);
+        });
+    </script>
+</body>
+</html>
