@@ -35,6 +35,7 @@ public class BoardController {
         return "aboard"; // 타임리프 템플릿 aboard.html 로 이동
     }
 
+
     // 페이징된 게시글 목록 반환
     @GetMapping("/list/json")
     @ResponseBody

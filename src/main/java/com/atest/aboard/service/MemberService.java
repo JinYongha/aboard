@@ -3,6 +3,8 @@ package com.atest.aboard.service;
 import com.atest.aboard.domain.Member;
 import com.atest.aboard.mapper.MemberMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,7 +12,22 @@ import java.util.List;
 @Service
 public class MemberService {
 
+    @Autowired
     private final MemberMapper memberMapper;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;  // PasswordEncoder 인터페이스로 주입받을 수 있음
+
+
+    public Member authenticate(String username, String password) {
+        // 사용자 정보를 DB에서 가져오기
+        Member member = memberMapper.findByUsername(username);
+
+        if (member != null && passwordEncoder.matches(password, member.getUserpw())) {
+            return member; // 로그인 성공
+        }
+        return null; // 로그인 실패
+    }
 
     @Autowired
     public MemberService(MemberMapper memberMapper) {

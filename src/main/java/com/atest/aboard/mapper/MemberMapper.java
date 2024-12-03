@@ -2,11 +2,13 @@ package com.atest.aboard.mapper;
 
 import com.atest.aboard.domain.Member;
 import org.apache.ibatis.annotations.*;
-
 import java.util.List;
 
 @Mapper
 public interface MemberMapper {
+
+    @Select("SELECT * FROM member WHERE id = #{id}")
+    Member findByUsername(String id);
 
     // ID로 회원 조회
     @Select("SELECT * FROM member WHERE id = #{id}")
