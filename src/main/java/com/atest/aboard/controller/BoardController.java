@@ -4,6 +4,8 @@ import com.atest.aboard.domain.Board;
 import com.atest.aboard.service.BoardService;
 import com.github.pagehelper.Page;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -29,6 +31,8 @@ public class BoardController {
 
     @GetMapping("/aboard")
     public String aboardPage(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        System.out.println("Authenticated User: " + authentication.getName());
         // 필요한 데이터를 모델에 추가
         model.addAttribute("username", "홍길동");
         model.addAttribute("position", "개발자");

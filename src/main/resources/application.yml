@@ -22,3 +22,8 @@ mybatis:
   config-location: classpath:mybatis-config.xml
   type-aliases-package: com.atest.aboard.domain
 
+logging:
+  level:
+    org.springframework.security.web.authentication: DEBUG
+    org.springframework.security.web.access: DEBUG
+
