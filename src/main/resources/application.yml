@@ -26,4 +26,5 @@ logging:
   level:
     org.springframework.security.web.authentication: DEBUG
     org.springframework.security.web.access: DEBUG
+    org.springframework.security: DEBUG
 

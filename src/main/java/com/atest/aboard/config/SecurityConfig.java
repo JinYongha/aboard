@@ -27,6 +27,7 @@ public class SecurityConfig {
                 )
                 .formLogin(form -> form
                         .loginPage("/login") // 사용자 정의 로그인 페이지
+                        .loginProcessingUrl("/login") // 로그인 처리 URL
                         .defaultSuccessUrl("/board/aboard", true) // 로그인 성공 후 리다이렉트할 URL
                         .permitAll()
                 )
